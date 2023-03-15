@@ -1,5 +1,9 @@
 # **_Commit Easy for Git_**
 
+<div style='text-align: center;'>
+  <img src='./previews/gif.gif' alt='Preview CLI' />
+</div>
+
 ## **_Requisites:_**
 
 - Node.JS
