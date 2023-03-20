@@ -1,4 +1,6 @@
-export const COMMIT_TYPES = {
+import { commitTypes, commitType } from './types.js'
+
+export const COMMIT_TYPES: Record<commitTypes, commitType> = {
   feat: {
     emoji: '🆕',
     description: 'Add new feature',

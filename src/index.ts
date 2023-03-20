@@ -1,7 +1,7 @@
 import { intro, outro, text, select, isCancel, cancel, confirm, multiselect } from '@clack/prompts'
 import { getChangedFiles, getStagedFiles, gitCommit, gitAdd } from './git.js'
 import { COMMIT_TYPES } from './commit-types.js'
-import { type commitTypes } from './types.js'
+import { commitType, type commitTypes } from './types.js'
 import { trytm } from '@bdsqqq/try'
 import colors from 'picocolors'
 
@@ -30,10 +30,10 @@ if (stagedFiles.length === 0) {
   await gitAdd({ files: files as string[] })
 }
 
-const commitType: string | symbol = await select({
+const commitType: commitTypes | symbol = await select({
   message: colors.blue('Selecciona el tipo de commit'),
-  options: Object.entries(COMMIT_TYPES).map(([key, value]): { value: string; label: string } => ({
-    value: key,
+  options: Object.entries(COMMIT_TYPES).map(([key, value]): { value: commitTypes; label: string } => ({
+    value: key as commitTypes,
     label: `${value.emoji} ${key.padEnd(8, ' ')} - ${value.description}`
   }))
 })
@@ -57,7 +57,7 @@ if (isCancel(commitMsg)) {
   process.exit(0)
 }
 
-const { emoji, release } = COMMIT_TYPES[commitType as commitTypes]
+const { emoji, release } = COMMIT_TYPES[commitType]
 let breakingChange: boolean | symbol = false
 if (release) {
   breakingChange = await confirm({
@@ -76,7 +76,7 @@ if (isCancel(breakingChange)) {
 let commit: string = `${emoji} ${commitType}: ${commitMsg}`
 commit = breakingChange ? `${commit} [Breaking change]` : commit
 
-const shouldContinue = await confirm({
+const shouldContinue: boolean | symbol = await confirm({
   initialValue: true,
   message: `${colors.blue('¿Quieres crear el commit con el siguiente mensaje?')}
   
