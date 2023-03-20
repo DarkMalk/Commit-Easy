@@ -15,19 +15,24 @@ if (errorChangedFiles ?? errorStagedFiles) {
   process.exit(1)
 }
 
-if (stagedFiles.length === 0) {
-  const files = await multiselect({
+if (changedFiles.length === 0 && stagedFiles.length === 0) {
+  outro(colors.red('No se ha encontrado ningún archivo modificado'))
+  process.exit(0)
+}
+
+if (changedFiles.length > 0 && stagedFiles.length === 0) {
+  const files: string[] | symbol = await multiselect({
     message: `${colors.blue('Selecciona un archivo para realizar commit')}`,
     options: changedFiles.map(file => ({
-      label: file,
-      value: file
+      value: file,
+      label: `📄 ${file}`
     }))
   })
   if (isCancel(files)) {
     cancel('No se ha seleccionado ningún archivo')
     process.exit(0)
   }
-  await gitAdd({ files: files as string[] })
+  await gitAdd({ files })
 }
 
 const commitType: commitTypes | symbol = await select({
