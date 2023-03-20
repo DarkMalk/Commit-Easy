@@ -1,6 +1,6 @@
 {
   "name": "commit-easy",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "App from commit easy",
   "type": "module",
   "bin": {
