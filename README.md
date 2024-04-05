@@ -1,5 +1,7 @@
 # **_Commit Easy for Git_**
 
+The project inspired in [Miduco - @midudev](https://github.com/midudev/miduco)
+
 <div style='text-align: center;'>
   <img src='./previews/gif.gif' alt='Preview CLI' />
 </div>
